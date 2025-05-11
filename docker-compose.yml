@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  llm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mixtral-llm
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 24g    # Half of your total — leaves space for agents
+        reservations:
+          memory: 12g
+
+volumes:
+  ollama_data:
